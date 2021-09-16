@@ -1,0 +1,3 @@
+ghapi
+elasticsearch==7.13.4
+asyncio
