@@ -1,4 +1,4 @@
 ghapi
-elasticsearch==7.13.4
+opensearch-py[async]
 asyncio
 python-dotenv
