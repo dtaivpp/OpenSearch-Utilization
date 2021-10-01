@@ -8,9 +8,8 @@ from collector import repo_collector
 def main():
   """Main method for github-collector"""
   opensearch = create_client()
-  create_index(opensearch)
-
   loop = asyncio.get_event_loop()
+  loop.run_until_complete(create_index(opensearch))
   loop.run_until_complete(index_batch(opensearch, repo_collector))
 
 if __name__=="__main__":
