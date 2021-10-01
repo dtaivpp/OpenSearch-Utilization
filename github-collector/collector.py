@@ -2,7 +2,6 @@
 Module used for collecting repository metadata from GitHub
 """
 import os
-import asyncio
 from time import sleep
 from ghapi.all import GhApi
 from ghapi.page import paged
