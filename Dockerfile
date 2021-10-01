@@ -5,6 +5,7 @@ ADD requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 WORKDIR /code
-COPY . .
+ADD .env .env
+COPY ./github-collector .
 
-CMD python /code/github-collector/runner.py
+CMD python /code/runner.py
