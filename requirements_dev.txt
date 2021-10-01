@@ -1,4 +1,3 @@
 pylint
 autopep8
 pre-commit
-dotenv
