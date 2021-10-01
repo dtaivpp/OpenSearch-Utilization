@@ -1,17 +1,16 @@
 """
 Module used for indexing repository data from GitHub
 """
-import asyncio
-from elasticsearch import AsyncElasticsearch
-from elasticsearch.helpers import async_streaming_bulk
+from opensearchpy import AsyncOpenSearch
+from opensearchpy.helpers import async_streaming_bulk
 
 
 def create_client():
   """Returns OpenSearch Client"""
-  return AsyncElasticsearch(["https://opensearch-node1:9200","https://opensearch-node2:9200"])
+  return AsyncOpenSearch(["https://opensearch-node1:9200","https://opensearch-node2:9200"])
 
 
-def create_index(client):
+async def create_index(client):
   """Creates an index in OpenSearch"""
   client.indices.create(
     index="github",
@@ -22,7 +21,7 @@ def create_index(client):
   )
 
 
-async def index_batch(client: AsyncElasticsearch, data_generator):
+async def index_batch(client: AsyncOpenSearch, data_generator):
   """Indexes a stream of documents"""
   async for ok, result in async_streaming_bulk(client, data_generator()): # pylint: disable=C0103
     action, result = result.popitem()
@@ -31,5 +30,5 @@ async def index_batch(client: AsyncElasticsearch, data_generator):
 
 
 if __name__ == "__main__":
-  _client = AsyncElasticsearch(["https://opensearch-node1:9200","https://opensearch-node2:9200"])
+  _client = AsyncOpenSearch(["https://opensearch-node1:9200","https://opensearch-node2:9200"])
   create_index(_client)
