@@ -2,15 +2,24 @@
 Module used for indexing repository data from GitHub
 """
 from opensearchpy import AsyncOpenSearch
+from opensearchpy import OpenSearch
 from opensearchpy.helpers import async_streaming_bulk
 
 
-def create_client():
+def create_client(isasync = False):
   """Returns OpenSearch Client"""
-  return AsyncOpenSearch(["https://opensearch-node1:9200","https://opensearch-node2:9200"])
+  if isasync == True:
+    return AsyncOpenSearch(
+      ["https://opensearch-node1:9200","https://opensearch-node2:9200"],
+      ca_certs=False,
+      verify_certs=False)
+  else:
+    return OpenSearch(["https://opensearch-node1:9200","https://opensearch-node2:9200"],
+    ca_certs=False,
+    verify_certs=False)
 
 
-async def create_index(client):
+def create_index(client):
   """Creates an index in OpenSearch"""
   client.indices.create(
     index="github",
